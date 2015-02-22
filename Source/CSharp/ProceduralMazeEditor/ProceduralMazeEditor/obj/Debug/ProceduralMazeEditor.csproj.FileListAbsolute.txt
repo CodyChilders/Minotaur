@@ -1,0 +1,6 @@
+C:\Users\Cody\Downloads\Documents\Code\ProceduralMazeEditor\ProceduralMazeEditor\bin\Debug\ProceduralMazeEditor.exe.config
+C:\Users\Cody\Downloads\Documents\Code\ProceduralMazeEditor\ProceduralMazeEditor\obj\Debug\ProceduralMazeEditor.csprojResolveAssemblyReference.cache
+C:\Users\Cody\Downloads\Documents\Code\ProceduralMazeEditor\ProceduralMazeEditor\bin\Debug\ProceduralMazeEditor.exe
+C:\Users\Cody\Downloads\Documents\Code\ProceduralMazeEditor\ProceduralMazeEditor\bin\Debug\ProceduralMazeEditor.pdb
+C:\Users\Cody\Downloads\Documents\Code\ProceduralMazeEditor\ProceduralMazeEditor\obj\Debug\ProceduralMazeEditor.exe
+C:\Users\Cody\Downloads\Documents\Code\ProceduralMazeEditor\ProceduralMazeEditor\obj\Debug\ProceduralMazeEditor.pdb
