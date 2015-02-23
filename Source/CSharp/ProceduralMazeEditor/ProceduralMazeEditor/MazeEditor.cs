@@ -91,7 +91,7 @@ SetStartAndEndPointCharInput:
                     Console.WriteLine("Invalid Option");
                     goto SetStartAndEndPointCharInput;
             }
-            Console.Write("Enter the coordinate of the node you want to make a " + (startPoint ? "starting" : "ending" )+ " point (expects 2 integers): ");
+            Console.Write("Enter the coordinate of the node you want to make a " + (startPoint ? "starting" : "ending" ) + " point (expects 2 integers): ");
             int node_x, node_y;
 SetStartAndEndPointTwoIntInput:
             try
@@ -144,7 +144,7 @@ OneEdgeTwoIntInput:
                 Console.WriteLine("Not enough inputs");
                 goto OneEdgeTwoIntInput;
             }
-            if (node_x >= (maze.GetLength(0) + 1) / 2 || node_x < 0 || node_y >= (maze.GetLength(0) + 1 ) / 2 || node_y < 0)
+            if (node_x >= maze.GetLength(0) / 2 || node_x < 0 || node_y >= maze.GetLength(0) / 2 || node_y < 0)
             {
                 Console.WriteLine("Numbers entered are out of bounds");
                 goto OneEdgeTwoIntInput;
@@ -520,7 +520,7 @@ SaveReadFilenamePrompt:
             string mazeString = "";
             if (!printingToFile)
             {
-                //show the line numbers on the top
+                //show the column numbers on the top
                 mazeString += "  ";
                 for (int i = 0; i < maze.GetLength(0) / 2 + 1; i++)
                 {
@@ -564,7 +564,7 @@ SaveReadFilenamePrompt:
                             break;
                         case MazeTypes.Node:
                             int neighbors;
-                            bool junk = IsDeadEnd(i, j, maze, out neighbors); //Throwing away the bool here, but we want to see if it is all alone
+                            IsDeadEnd(i, j, maze, out neighbors); //Throwing away the bool here, but we want to see if it is all alone
                             if (!printingToFile)
                                 mazeString += (neighbors != 0 ? "+" : " ");
                             else
