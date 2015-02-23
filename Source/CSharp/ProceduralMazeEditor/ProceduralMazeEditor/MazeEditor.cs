@@ -503,8 +503,34 @@ OneEdgeAddRemovePrompt:
         static string PrintMaze(MazeTypes[,] maze, bool printingToFile = false)
         {
             string mazeString = "";
+            if (!printingToFile)
+            {
+                //show the line numbers on the top
+                mazeString += "  ";
+                for (int i = 0; i < maze.GetLength(0) / 2 + 1; i++)
+                {
+                    string number = i.ToString();
+                    number = string.Format("{0,4}", number);
+                    mazeString += number;
+                }
+                mazeString += "\n";
+            }
             for (int i = 0; i < maze.GetLength(0); i++)
             {
+                if (!printingToFile)
+                {
+                    if (i % 2 == 0)
+                    {
+                        //print the row numbers
+                        string number = (i / 2).ToString();
+                        number = string.Format("{0,4}", number) + " ";
+                        mazeString += number;
+                    }
+                    else
+                    {
+                        mazeString += "     ";
+                    }
+                }
                 for (int j = 0; j < maze.GetLength(1); j++)
                 {
                     switch (maze[i, j])
