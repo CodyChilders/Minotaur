@@ -246,10 +246,16 @@ OneEdgeAddRemovePrompt:
         {
             savedSinceLastEdit = true;
             Console.Write("Enter filename to save to: ");
+SaveReadFilenamePrompt:
             string filename = Console.ReadLine();
             if (!filename.EndsWith(".maze"))
             {
                 filename += ".maze";
+            }
+            if (filename.ToLower() == "basemaze.maze" || filename.ToLower() == "unitymazefile.maze" || filename.ToLower() == "autosave.maze")
+            {
+                Console.Write("{0} is a filename used by the editor, you can't save a file to that name.  Choose a new filename: ", filename);
+                goto SaveReadFilenamePrompt;
             }
             System.IO.File.WriteAllText(@filename, ((maze.GetLength(0) + 1) / 2).ToString() + "\n" + PrintMaze(maze, true));
         }
