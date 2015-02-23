@@ -27,18 +27,22 @@ namespace ProceduralMazeEditor
                 {
                     case "r":
                         undoStates.Push(CopyMaze(maze));
+                        Autosave(CopyMaze(maze));
                         RemoveDeadEnds(maze);
                         goto case "p";
                     case "a":
                         undoStates.Push(CopyMaze(maze));
+                        Autosave(CopyMaze(maze));
                         AddHallways(maze);
                         goto case "p";
                     case "o":
                         undoStates.Push(CopyMaze(maze));
+                        Autosave(CopyMaze(maze));
                         OneEdge(maze);
                         goto case "p";
                     case "i":
                         undoStates.Push(CopyMaze(maze));
+                        Autosave(CopyMaze(maze));
                         SetStartAndEndPoint(maze);
                         goto case "p";
                     case "u":
@@ -258,6 +262,11 @@ SaveReadFilenamePrompt:
                 goto SaveReadFilenamePrompt;
             }
             System.IO.File.WriteAllText(@filename, ((maze.GetLength(0) + 1) / 2).ToString() + "\n" + PrintMaze(maze, true));
+        }
+
+        private static void Autosave(MazeTypes[,] maze)
+        {
+            System.IO.File.WriteAllText(@"autosave.maze", ((maze.GetLength(0) + 1) / 2).ToString() + "\n" + PrintMaze(maze, true));
         }
 
         private static void AddHallways(MazeTypes[,] maze)
