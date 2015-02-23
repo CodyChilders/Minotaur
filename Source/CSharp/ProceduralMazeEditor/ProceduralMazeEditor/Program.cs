@@ -18,14 +18,12 @@ namespace ProceduralMazeEditor
             if (args.Length != 1)
             {
                 Console.WriteLine("Error: expected filename as first argument to editor program.  Exiting.");
-                Thread.Sleep(5000);
                 Environment.Exit(1);
             }
 
             if (!File.Exists(args[0]))
             {
                 Console.WriteLine("Error: file {0} not found.", args[0]);
-                Thread.Sleep(5000);
                 Environment.Exit(2);
             }
 

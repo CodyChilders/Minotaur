@@ -515,7 +515,7 @@ SaveReadFilenamePrompt:
             }
         }
 
-        static string PrintMaze(MazeTypes[,] maze, bool printingToFile = false)
+        private static string PrintMaze(MazeTypes[,] maze, bool printingToFile = false)
         {
             string mazeString = "";
             if (!printingToFile)
