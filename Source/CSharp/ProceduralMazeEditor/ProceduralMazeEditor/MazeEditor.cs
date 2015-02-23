@@ -11,12 +11,13 @@ namespace ProceduralMazeEditor
 
         static bool savedSinceLastEdit = true;
         static Random rng = new Random();
+        static Stack<MazeTypes[,]> undoStates = new Stack<MazeTypes[,]>();
 
         public static void EnterEditMode(MazeTypes[,] maze)
         {
             Console.WriteLine("Welcome to the procedural maze editor!\n");
             Console.WriteLine("Here is the maze you are working with:\n" + PrintMaze(maze) + "\n");
-            MazeTypes[,] backup = null;
+            undoStates.Push(CopyMaze(maze));
             while (true)
             {
                 Console.Write("What would you like to do? \n(R)emove dead ends\n(A)dd hallways\n(O)ne edge\n(I)dentify start and end point\n(U)ndo\n(S)ave\n(E)xit\n>> ");
@@ -25,31 +26,30 @@ namespace ProceduralMazeEditor
                 switch (command)
                 {
                     case "r":
-                        backup = CopyMaze(maze);
+                        undoStates.Push(CopyMaze(maze));
                         RemoveDeadEnds(maze);
                         goto case "p";
                     case "a":
-                        backup = CopyMaze(maze);
+                        undoStates.Push(CopyMaze(maze));
                         AddHallways(maze);
                         goto case "p";
                     case "o":
-                        backup = CopyMaze(maze);
+                        undoStates.Push(CopyMaze(maze));
                         OneEdge(maze);
                         goto case "p";
                     case "i":
-                        backup = CopyMaze(maze);
+                        undoStates.Push(CopyMaze(maze));
                         SetStartAndEndPoint(maze);
                         goto case "p";
                     case "u":
-                        if (backup != null)
+                        if (undoStates.Count() > 1)
                         {
-                            maze = backup;
-                            backup = null;
+                            maze = undoStates.Pop();
                             goto case "p";
                         }
                         else
                         {
-                            Console.WriteLine("Unable to undo.  The undo operation can only go back 1 step.\n");
+                            Console.WriteLine("Unable to undo.  There are no previous changes\n");
                         }
                         break;
                     case "s":
