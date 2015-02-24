@@ -84,6 +84,7 @@ namespace ProceduralMazeEditor
             Console.WriteLine("- The undo function can undo steps all the way to when you opened the file.");
             Console.WriteLine("- If you do not identify at least one start point in the maze, the renderer will be unable to automatically move you into the maze.  If you enter more than one, it will choose randomly.");
             Console.WriteLine("- The one-edge functionality allows you finer control over the maze.  You can only do it one hallway at a time.");
+            Console.WriteLine("- There is a secret command \"p\" on the editor main menu that prints the maze again.  It is not listed because every operation that changes the maze also prints the new maze out.");
             Console.WriteLine("");
         }
 
@@ -203,20 +204,28 @@ OneEdgeAddRemovePrompt:
                     goto OneEdgeAddRemovePrompt;
             }
             //finally we can do the operation
-            switch (direction)
+            try
             {
-                case 'r':
-                    maze[node_x, node_y + 1] = (addingHallway ? MazeTypes.Hallway : MazeTypes.Empty);
-                    break;
-                case 'l':
-                    maze[node_x, node_y - 1] = (addingHallway ? MazeTypes.Hallway : MazeTypes.Empty);
-                    break;
-                case 'u':
-                    maze[node_x - 1, node_y] = (addingHallway ? MazeTypes.Hallway : MazeTypes.Empty);
-                    break;
-                case 'd':
-                    maze[node_x + 1, node_y] = (addingHallway ? MazeTypes.Hallway : MazeTypes.Empty);
-                    break;
+                MazeTypes edge = (addingHallway ? MazeTypes.Hallway : MazeTypes.Empty);
+                switch (direction)
+                {
+                    case 'r':
+                        maze[node_x, node_y + 1] = edge;
+                        break;
+                    case 'l':
+                        maze[node_x, node_y - 1] = edge;
+                        break;
+                    case 'u':
+                        maze[node_x - 1, node_y] = edge;
+                        break;
+                    case 'd':
+                        maze[node_x + 1, node_y] = edge;
+                        break;
+                }
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine("\n\nThe hallway you have attempted to change has gone off the edge of the map.  Unable to perform operation.\n\n");
             }
         }
 
