@@ -485,6 +485,22 @@ SaveReadFilenamePrompt:
             }
         }
 
+        private static bool IsSurroundedByHallways(MazeTypes[,] maze, int x, int y)
+        {
+            //check up, down, left, and right to see if a hallway exists at that space.
+            //don't need to try/catch it all because junk can't be on an edge.
+            int neighboringHallways = 0;
+            if (maze[x, y + 1] == MazeTypes.Hallway)
+                neighboringHallways++;
+            if (maze[x, y - 1] == MazeTypes.Hallway)
+                neighboringHallways++;
+            if (maze[x + 1, y] == MazeTypes.Hallway)
+                neighboringHallways++;
+            if (maze[x - 1, y] == MazeTypes.Hallway)
+                neighboringHallways++;
+            return neighboringHallways == 4;
+        }
+
         private static float GetFloat()
         {
             Console.Write("Enter the percentage of this operation happening at each point, or leave blank if you want it random: ");
@@ -592,7 +608,22 @@ SaveReadFilenamePrompt:
                             mazeString += "E";
                             break;
                         case MazeTypes.Junk:
-                            mazeString += (printingToFile ? "j" : "   ");
+                            if (printingToFile)
+                            {
+                                mazeString += "j";
+                            }
+                            else
+                            {
+                                if (IsSurroundedByHallways(maze, i, j))
+                                {
+                                    mazeString += "XXX";
+                                }
+                                else
+                                {
+                                    mazeString += "   ";
+                                }
+                            }
+                            //mazeString += (printingToFile ? "j" : "   ");
                             break;
                         default:
                             mazeString += "\u262D"; //This is an error indicator.  Hopefully the commies don't get into our maze...
