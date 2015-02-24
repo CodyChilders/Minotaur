@@ -20,7 +20,7 @@ namespace ProceduralMazeEditor
             undoStates.Push(CopyMaze(maze));
             while (true)
             {
-                Console.Write("What would you like to do? \n(R)emove dead ends\n(A)dd hallways\n(O)ne edge\n(I)dentify start and end point\n(U)ndo\n(S)ave\n(E)xit\n>> ");
+                Console.Write("What would you like to do? \n(R)emove dead ends\n(A)dd hallways\n(O)ne edge\n(I)dentify start and end point\n(U)ndo\n(S)ave\n(E)xit\n(H)elp\n>> ");
                 string command = Console.ReadLine();
                 command = command.ToLower();
                 switch (command)
@@ -62,6 +62,9 @@ namespace ProceduralMazeEditor
                     case "e":
                         Exit();
                         break;
+                    case "h":
+                        PrintHelpInfo();
+                        break;
                     case "p":
                         Console.WriteLine(PrintMaze(maze));
                         break;
@@ -70,6 +73,18 @@ namespace ProceduralMazeEditor
                         break;
                 }
             }
+        }
+
+        private static void PrintHelpInfo()
+        {
+            Console.WriteLine("- The plusses and dashes are the maze, not the blank areas between them.");
+            Console.WriteLine("- If you connect 4 nodes in a square with hallways, they will be built and rendered as a single room.");
+            Console.WriteLine("- Adding hallways and removing dead ends work on a percentage.  Enter the percent you want removed, and that many will be modified.");
+            Console.WriteLine("- Entering a percentage can be done as either a floating point number from 0 to 1, or an integer number from 1 to 100.");
+            Console.WriteLine("- The undo function can undo steps all the way to when you opened the file.");
+            Console.WriteLine("- If you do not identify at least one start point in the maze, the renderer will be unable to automatically move you into the maze.  If you enter more than one, it will choose randomly.");
+            Console.WriteLine("- The one-edge functionality allows you finer control over the maze.  You can only do it one hallway at a time.");
+            Console.WriteLine("");
         }
 
         private static void SetStartAndEndPoint(MazeTypes[,] maze)
@@ -458,7 +473,7 @@ SaveReadFilenamePrompt:
                 for (int j = 0; j < maze.GetLength(1); j += 2)
                 {
                     int junk; //Don't need this, just to satisfy IsDeadEnd.
-                    if (IsDeadEnd(i, j, mazeCopy, out junk))
+                    if (IsDeadEnd(i, j, mazeCopy, out junk) && mazeCopy[i, j] == MazeTypes.Node)//It has to be a node here so it doesn't pull hallways away from start/end points
                     {
                         float dieRoll = (float)rng.NextDouble();
                         if (dieRoll < percentage)

@@ -62,6 +62,7 @@ namespace ProceduralMazeEditor
                     }
                 }
                 rawMazeData.Close();
+                Console.WriteLine("Remember that the lines drawn are the pathways, not the blank space between them.  When rendering, they will behave like you expect them to.");
                 MazeEditor.EnterEditMode(editableMaze);
             }
         }

@@ -53,7 +53,11 @@ public class LevelReaderAndBuilder : MonoBehaviour {
                     switch (maze[i, j])
                     {
                         case MazeTypes.Node:
-                            GameObject a = Instantiate(floor, new Vector3(i, 0, j), Quaternion.identity) as GameObject;
+                            GameObject a;
+                            if (IsInCenterOfWalls(maze, i, j))
+                                goto case MazeTypes.Empty;
+                            else
+                                a = Instantiate(floor, new Vector3(i, 0, j), Quaternion.identity) as GameObject;
                             break;
                         case MazeTypes.Hallway:
                             goto case MazeTypes.Node;
@@ -67,7 +71,10 @@ public class LevelReaderAndBuilder : MonoBehaviour {
                             GameObject d = Instantiate(end, new Vector3(i, 0, j), Quaternion.identity) as GameObject;
                             break;
                         case MazeTypes.Junk:
-                            goto case MazeTypes.Empty;
+                            if (IsInCenterOfRoom(maze, i, j))
+                                goto case MazeTypes.Node;
+                            else
+                                goto case MazeTypes.Empty;
                     }
                 }
                 catch (IndexOutOfRangeException e)
@@ -76,6 +83,50 @@ public class LevelReaderAndBuilder : MonoBehaviour {
                 }
             }
         }
+    }
+
+    bool IsInCenterOfRoom(MazeTypes[,] maze, int x, int y)
+    {
+        int neighboringHallways = 0;
+        if (maze[x - 1, y] == MazeTypes.Hallway)
+        {
+            neighboringHallways++;
+        }
+        if (maze[x + 1, y] == MazeTypes.Hallway)
+        {
+            neighboringHallways++;
+        }
+        if (maze[x, y - 1] == MazeTypes.Hallway)
+        {
+            neighboringHallways++;
+        }
+        if (maze[x, y + 1] == MazeTypes.Hallway)
+        {
+            neighboringHallways++;
+        }
+        return neighboringHallways == 4;
+    }
+
+    bool IsInCenterOfWalls(MazeTypes[,] maze, int x, int y)
+    {
+        int neighboringWalls = 0;
+        if (maze[x - 1, y] == MazeTypes.Empty)
+        {
+            neighboringWalls++;
+        }
+        if (maze[x + 1, y] == MazeTypes.Empty)
+        {
+            neighboringWalls++;
+        }
+        if (maze[x, y - 1] == MazeTypes.Empty)
+        {
+            neighboringWalls++;
+        }
+        if (maze[x, y + 1] == MazeTypes.Empty)
+        {
+            neighboringWalls++;
+        }
+        return neighboringWalls == 4;
     }
 
     MazeTypes[,] ReadFile(string filename)
