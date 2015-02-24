@@ -78,7 +78,7 @@ namespace ProceduralMazeEditor
         private static void PrintHelpInfo()
         {
             Console.WriteLine("- The plusses and dashes are the maze, not the blank areas between them.");
-            Console.WriteLine("- If you connect 4 nodes in a square with hallways, they will be built and rendered as a single room.");
+            Console.WriteLine("- If you connect 4 nodes in a 2x2 square with hallways, they will be built and rendered as a single room.  An \"XXX\" indicates that it is a room.");
             Console.WriteLine("- Adding hallways and removing dead ends work on a percentage.  Enter the percent you want removed, and that many will be modified.");
             Console.WriteLine("- Entering a percentage can be done as either a floating point number from 0 to 1, or an integer number from 1 to 100.");
             Console.WriteLine("- The undo function can undo steps all the way to when you opened the file.");
