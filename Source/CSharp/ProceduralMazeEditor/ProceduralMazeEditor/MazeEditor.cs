@@ -210,16 +210,16 @@ OneEdgeAddRemovePrompt:
                 switch (direction)
                 {
                     case 'r':
-                        maze[node_x, node_y + 1] = edge;
+                        maze[node_x * 2, node_y * 2 + 1] = edge;
                         break;
                     case 'l':
-                        maze[node_x, node_y - 1] = edge;
+                        maze[node_x * 2, node_y * 2 - 1] = edge;
                         break;
                     case 'u':
-                        maze[node_x - 1, node_y] = edge;
+                        maze[node_x * 2 - 1, node_y * 2] = edge;
                         break;
                     case 'd':
-                        maze[node_x + 1, node_y] = edge;
+                        maze[node_x * 2 + 1, node_y * 2] = edge;
                         break;
                 }
             }
