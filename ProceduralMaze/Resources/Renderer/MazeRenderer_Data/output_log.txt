@@ -16,7 +16,7 @@ Platform assembly: C:\Users\Cody\Downloads\Documents\GitHub\ProceduralMazeEditor
 Loading C:\Users\Cody\Downloads\Documents\GitHub\ProceduralMazeEditor\ProceduralMaze\Resources\Renderer\MazeRenderer_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
 Platform assembly: C:\Users\Cody\Downloads\Documents\GitHub\ProceduralMazeEditor\ProceduralMaze\Resources\Renderer\MazeRenderer_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading C:\Users\Cody\Downloads\Documents\GitHub\ProceduralMazeEditor\ProceduralMaze\Resources\Renderer\MazeRenderer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.171 seconds
+- Completed reload, in  0.077 seconds
 desktop: 1920x1080 59Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
