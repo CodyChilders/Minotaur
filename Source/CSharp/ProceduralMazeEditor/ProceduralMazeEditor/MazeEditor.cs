@@ -140,7 +140,7 @@ SetStartAndEndPointTwoIntInput:
         {
             savedSinceLastEdit = false;
             Console.WriteLine("Remember that this counts by the + symbols, starting at 0 and counting up.");
-            Console.Write("Which node do you want to start with?  Enter column number first, followed by row: ");
+            Console.Write("Which node do you want to start with?  Enter row number first, followed by the column: ");
             int node_x;
             int node_y;
 OneEdgeTwoIntInput:
@@ -160,7 +160,7 @@ OneEdgeTwoIntInput:
                 Console.WriteLine("Not enough inputs");
                 goto OneEdgeTwoIntInput;
             }
-            if (node_x >= maze.GetLength(0) / 2 || node_x < 0 || node_y >= maze.GetLength(0) / 2 || node_y < 0)
+            if (node_x >= maze.GetLength(0) / 2 + 1 || node_x < 0 || node_y >= maze.GetLength(1) / 2 + 1 || node_y < 0)
             {
                 Console.WriteLine("Numbers entered are out of bounds");
                 goto OneEdgeTwoIntInput;
