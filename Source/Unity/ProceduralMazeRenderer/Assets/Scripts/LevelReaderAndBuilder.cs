@@ -50,25 +50,25 @@ public class LevelReaderAndBuilder : MonoBehaviour {
             {
                 try
                 {
+                    GameObject instantiatedObject = null;
                     switch (maze[i, j])
                     {
                         case MazeTypes.Node:
-                            GameObject a;
                             if (IsInCenterOfWalls(maze, i, j))
                                 goto case MazeTypes.Empty;
                             else
-                                a = Instantiate(floor, new Vector3(i, 0, j), Quaternion.identity) as GameObject;
+                                instantiatedObject = Instantiate(floor, new Vector3(i, 0, j), Quaternion.identity) as GameObject;
                             break;
                         case MazeTypes.Hallway:
                             goto case MazeTypes.Node;
                         case MazeTypes.Empty:
-                            GameObject b = Instantiate(wall, new Vector3(i, 0.5f, j), Quaternion.identity) as GameObject;
+                            instantiatedObject = Instantiate(wall, new Vector3(i, 0.5f, j), Quaternion.identity) as GameObject;
                             break;
                         case MazeTypes.Start:
-                            GameObject c = Instantiate(start, new Vector3(i, 0, j), Quaternion.identity) as GameObject;
+                            instantiatedObject = Instantiate(start, new Vector3(i, 0, j), Quaternion.identity) as GameObject;
                             break;
                         case MazeTypes.End:
-                            GameObject d = Instantiate(end, new Vector3(i, 0, j), Quaternion.identity) as GameObject;
+                            instantiatedObject = Instantiate(end, new Vector3(i, 0, j), Quaternion.identity) as GameObject;
                             break;
                         case MazeTypes.Junk:
                             if (IsInCenterOfRoom(maze, i, j))
@@ -79,7 +79,7 @@ public class LevelReaderAndBuilder : MonoBehaviour {
                 }
                 catch (IndexOutOfRangeException e)
                 {
-                    GameObject f = Instantiate(wall, new Vector3(i, 0.5f, j), Quaternion.identity) as GameObject;
+                    GameObject instantiatedObject = Instantiate(wall, new Vector3(i, 0.5f, j), Quaternion.identity) as GameObject;
                 }
             }
         }
@@ -107,22 +107,43 @@ public class LevelReaderAndBuilder : MonoBehaviour {
         return neighboringHallways == 4;
     }
 
+    //assumes that it has already been determined to be a node space
     bool IsInCenterOfWalls(MazeTypes[,] maze, int x, int y)
     {
         int neighboringWalls = 0;
-        if (maze[x - 1, y] == MazeTypes.Empty)
+        try
+        {
+            if (maze[x - 1, y] == MazeTypes.Empty)
+                neighboringWalls++;
+        }
+        catch (IndexOutOfRangeException e)
         {
             neighboringWalls++;
         }
-        if (maze[x + 1, y] == MazeTypes.Empty)
+        try
+        {
+            if (maze[x + 1, y] == MazeTypes.Empty)
+                neighboringWalls++;
+        }
+        catch (IndexOutOfRangeException e)
         {
             neighboringWalls++;
         }
-        if (maze[x, y - 1] == MazeTypes.Empty)
+        try
+        {
+            if (maze[x, y - 1] == MazeTypes.Empty)
+                neighboringWalls++;
+        }
+        catch (IndexOutOfRangeException e)
         {
             neighboringWalls++;
         }
-        if (maze[x, y + 1] == MazeTypes.Empty)
+        try
+        {
+            if (maze[x, y + 1] == MazeTypes.Empty)
+                neighboringWalls++;
+        }
+        catch (IndexOutOfRangeException e)
         {
             neighboringWalls++;
         }
