@@ -20,7 +20,7 @@ namespace ProceduralMazeEditor
             undoStates.Push(CopyMaze(maze));
             while (true)
             {
-                Console.Write("What would you like to do? \n(R)emove dead ends\n(A)dd hallways\n(O)ne edge\n(I)dentify start and end point\n(U)ndo\n(S)ave\n(E)xit\n(H)elp\n>> ");
+                Console.Write("What would you like to do? \n(R)emove dead ends\n(A)dd hallways\n(O)ne edge\n(I)dentify start and end point\n(C)reate room\n(D)estroy room\n(U)ndo\n(S)ave\n(E)xit\n(H)elp\n>> ");
                 string command = Console.ReadLine();
                 command = command.ToLower();
                 switch (command)
@@ -44,6 +44,16 @@ namespace ProceduralMazeEditor
                         undoStates.Push(CopyMaze(maze));
                         Autosave(CopyMaze(maze));
                         SetStartAndEndPoint(maze);
+                        goto case "p";
+                    case "c":
+                        undoStates.Push(CopyMaze(maze));
+                        Autosave(CopyMaze(maze));
+                        CreateRoom(maze, false);
+                        goto case "p";
+                    case "d":
+                        undoStates.Push(CopyMaze(maze));
+                        Autosave(CopyMaze(maze));
+                        CreateRoom(maze, true);
                         goto case "p";
                     case "u":
                         if (undoStates.Count() > 1)
@@ -291,6 +301,79 @@ SaveReadFilenamePrompt:
         private static void Autosave(MazeTypes[,] maze)
         {
             System.IO.File.WriteAllText(@"autosave.maze", ((maze.GetLength(0) + 1) / 2).ToString() + "\n" + PrintMaze(maze, true));
+        }
+
+        private static void CreateRoom(MazeTypes[,] maze, bool destroyingRoom)
+        {
+            savedSinceLastEdit = false;
+            Console.WriteLine("Remember that this counts by the + symbols, starting at 0 and counting up.");
+            Console.Write("Which node do you want to be the top left corner of the room?  Enter row number first, followed by the column: ");
+            int node_x;
+            int node_y;
+CreateRoomTwoIntInput:
+            try
+            {
+                string[] node = Console.ReadLine().Split(null);
+                node_x = int.Parse(node[0]);
+                node_y = int.Parse(node[1]);
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("Unable to parse two inputs as integers");
+                goto CreateRoomTwoIntInput;
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine("Not enough inputs");
+                goto CreateRoomTwoIntInput;
+            }
+            if (node_x >= maze.GetLength(0) / 2 + 1 || node_x < 0 || node_y >= maze.GetLength(1) / 2 + 1 || node_y < 0)
+            {
+                Console.WriteLine("Numbers entered are out of bounds");
+                goto CreateRoomTwoIntInput;
+            }
+            int width, height;
+            Console.Write("Enter the width and height of the room: ");
+CreateRoomWidthHeightInput:
+            try
+            {
+                string[] node = Console.ReadLine().Split(null);
+                width = int.Parse(node[0]);
+                height = int.Parse(node[1]);
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("Unable to parse two inputs as integers");
+                goto CreateRoomWidthHeightInput;
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine("Not enough inputs");
+                goto CreateRoomWidthHeightInput;
+            }
+            if (width >= maze.GetLength(0) / 2 + 1 || width < 0 || height >= maze.GetLength(1) / 2 + 1 || height < 0)
+            {
+                Console.WriteLine("Numbers entered are out of bounds");
+                goto CreateRoomWidthHeightInput;
+            }
+            //input was good if it got to here.  however, it is in the wrong scale
+            node_x *= 2;
+            node_y *= 2;
+            width  *= 2;
+            height *= 2;
+            width  += 1;
+            height += 1;
+            //iterate through the nodes, skipping nodes and junk spaces and changing empty to hallway
+            for (int i = node_x; i < Math.Min(maze.GetLength(0), node_x + width); i++)
+            {
+                for (int j = node_y; j < Math.Min(maze.GetLength(1), node_y + height); j++)
+                {
+                    if (maze[i, j] == (destroyingRoom ? MazeTypes.Hallway : MazeTypes.Empty) )//change is only required iff it is empty
+                    {
+                        maze[i, j] = (destroyingRoom ? MazeTypes.Empty : MazeTypes.Hallway);
+                    }
+                }
+            }
         }
 
         private static void AddHallways(MazeTypes[,] maze)
