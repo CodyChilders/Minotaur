@@ -1,6 +1,6 @@
 Procedural maze creation tools, by Cody Childers
 
-ProceduralMaze contains the project.  Run the .pyc file, this is the file manager
+Minotaur contains the project.  Run the .pyc file, this is the file manager
 that links the whole thing together.  You shouldn't need to go into the Resources folder.
 
 The source folder contains the source code, separated out into 4 parts:

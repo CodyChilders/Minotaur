@@ -1,3 +1,5 @@
+#this file is incomplete, do not run
+
 from subprocess import call
 from shutil import copyfile
 from shutil import copytree
@@ -23,6 +25,8 @@ def getUnity():
     pass
 
 def main():
+	return;
+	#remove this return when the file is done and tested.
     try:
         os.removedirs("ProceduralMaze")
     except:
